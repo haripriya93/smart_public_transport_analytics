@@ -99,7 +99,7 @@ def get_conn():
     )
 
 # Load data from your existing schema and views
-conn = get_conn(
+conn = get_conn()
 import io
 
 if conn:
@@ -182,6 +182,7 @@ for _, row in df_gps.iterrows():
 st_folium(m, width=700, height=500)
 
 st.success("✅ Dashboard refreshed successfully!")
+
 
 
 
