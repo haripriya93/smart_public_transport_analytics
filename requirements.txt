@@ -1,0 +1,8 @@
+streamlit
+pandas
+psycopg2-binary
+plotly
+scikit-learn
+folium
+streamlit-folium
+streamlit-autorefresh
