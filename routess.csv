@@ -1,0 +1,4 @@
+route_id,route_name,agency
+R1,Green Line,CityBus
+R2,Blue Line,CityBus
+R3,Airport Express,CityBus
