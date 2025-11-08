@@ -4,15 +4,25 @@ import psycopg2
 import plotly.express as px
 from sklearn.linear_model import LinearRegression
 import numpy as np
+import io
 
-# DB Connection
-conn = psycopg2.connect(
-    dbname="transport",
-    user="postgres",
-    password="123456789",
-    host="localhost",
-    port="5432"
-)
+# 🌟 Try to connect to the local PostgreSQL database
+def get_connection():
+    try:
+        conn = psycopg2.connect(
+            dbname="transport",
+            user="postgres",
+            password="postgres",
+            host="localhost",
+            port="5432"
+        )
+        st.success("✅ Connected to local PostgreSQL database")
+        return conn
+    except:
+        st.warning("⚠️ Running in Demo Mode (no database connection)")
+        return None
+
+conn = get_connection()
 
 # Load data
 df_delay = pd.read_sql("SELECT * FROM transit.mv_trip_punctuality", conn)
@@ -92,8 +102,18 @@ def get_conn():
 conn = get_conn()
 df_delay = pd.read_sql("SELECT * FROM transit.mv_trip_punctuality", conn)
 df_load = pd.read_sql("SELECT * FROM transit.v_route_load_factor", conn)
-df_gps = pd.read_sql("SELECT * FROM transit.gps_pings ORDER BY ts DESC LIMIT 10", conn)
-conn.close()
+if conn:
+    # ✅ Use real PostgreSQL data
+    df_gps = pd.read_sql("SELECT * FROM transit.gps_pings ORDER BY ts DESC LIMIT 10", conn)
+else:
+    # 🚀 Demo Mode — fake data for Streamlit Cloud
+    csv_data = """trip_id,vehicle_id,ts,lat,lon,speed_kmph
+T1,V101,2025-11-07 10:00:00,17.39,78.49,42
+T2,V102,2025-11-07 10:05:00,17.41,78.51,36
+T3,V103,2025-11-07 10:10:00,17.37,78.47,29
+T4,V104,2025-11-07 10:15:00,17.43,78.52,31
+"""
+    df_gps = pd.read_csv(io.StringIO(csv_data))
 
 # --- KPI Section ---
 st.subheader("📊 Key Performance Indicators")
@@ -138,4 +158,5 @@ for _, row in df_gps.iterrows():
 st_folium(m, width=700, height=500)
 
 st.success("✅ Dashboard refreshed successfully!")
+
 
