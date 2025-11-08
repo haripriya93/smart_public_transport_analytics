@@ -99,21 +99,45 @@ def get_conn():
     )
 
 # Load data from your existing schema and views
-conn = get_conn()
-df_delay = pd.read_sql("SELECT * FROM transit.mv_trip_punctuality", conn)
-df_load = pd.read_sql("SELECT * FROM transit.v_route_load_factor", conn)
+conn = get_conn(
+import io
+
 if conn:
-    # ✅ Use real PostgreSQL data
+    # ✅ Real database mode
+    df_delay = pd.read_sql("SELECT * FROM transit.mv_trip_punctuality", conn)
+    df_load = pd.read_sql("SELECT * FROM transit.v_route_load_factor", conn)
     df_gps = pd.read_sql("SELECT * FROM transit.gps_pings ORDER BY ts DESC LIMIT 10", conn)
 else:
-    # 🚀 Demo Mode — fake data for Streamlit Cloud
-    csv_data = """trip_id,vehicle_id,ts,lat,lon,speed_kmph
+    # 🚀 Demo mode (Streamlit Cloud)
+    st.warning("⚠️ Running in demo mode - using sample data")
+
+    # 1️⃣ Demo: Delay Data
+    csv_data_delay = """trip_id,delay_minutes
+T1,5
+T2,7
+T3,3
+T4,6
+"""
+    df_delay = pd.read_csv(io.StringIO(csv_data_delay))
+
+    # 2️⃣ Demo: Load Factor Data
+    csv_data_load = """route_id,load_factor
+R1,0.78
+R2,0.65
+R3,0.90
+R4,0.72
+"""
+    df_load = pd.read_csv(io.StringIO(csv_data_load))
+
+    # 3️⃣ Demo: GPS Data (for map)
+    csv_data_gps = """trip_id,vehicle_id,ts,lat,lon,speed_kmph
 T1,V101,2025-11-07 10:00:00,17.39,78.49,42
 T2,V102,2025-11-07 10:05:00,17.41,78.51,36
 T3,V103,2025-11-07 10:10:00,17.37,78.47,29
 T4,V104,2025-11-07 10:15:00,17.43,78.52,31
 """
-    df_gps = pd.read_csv(io.StringIO(csv_data))
+    df_gps = pd.read_csv(io.StringIO(csv_data_gps))
+
 
 # --- KPI Section ---
 st.subheader("📊 Key Performance Indicators")
@@ -158,5 +182,6 @@ for _, row in df_gps.iterrows():
 st_folium(m, width=700, height=500)
 
 st.success("✅ Dashboard refreshed successfully!")
+
 
 
