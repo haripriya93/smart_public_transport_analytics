@@ -332,3 +332,57 @@ st.markdown(
     </div>
     """, unsafe_allow_html=True
 )
+
+# -----------------------------
+# INSIGHTS (TABLE FORMAT)
+# -----------------------------
+st.markdown('<div class="block">', unsafe_allow_html=True)
+st.subheader("🧠 Quick Insights Summary")
+
+# Calculate key values safely
+best_route = df_load.sort_values("load_factor_est", ascending=False).head(1)["route_name"].iloc[0] if not df_load.empty else "N/A"
+best_load = float(df_load.sort_values("load_factor_est", ascending=False).head(1)["load_factor_est"].iloc[0] * 100) if not df_load.empty else 0.0
+worst_trip_row = df_delay.sort_values("avg_delay_min", ascending=False).head(1)
+worst_trip = worst_trip_row["trip_id"].iloc[0] if len(worst_trip_row) else "N/A"
+worst_delay = float(worst_trip_row["avg_delay_min"].iloc[0]) if len(worst_trip_row) else 0.0
+avg_passengers = round((df_load["load_factor_est"].mean() * 50), 1) if not df_load.empty else 0.0  # assuming capacity=50
+risk_label = "Low" if delay_risk < 40 else ("Moderate" if delay_risk < 70 else "High")
+recommendation = (
+    "Add extra bus for Route 2 (High demand)"
+    if avg_load_pct > 80
+    else "Maintain current schedule and monitor peak slots"
+)
+
+# Build a DataFrame for table
+insights_data = {
+    "Metric": [
+        "🏆 Best Performing Route",
+        "⚠️ Most Delayed Trip",
+        "🔮 Predicted Delay Risk",
+        "🧍 Average Passengers",
+        "🚦 Average Delay",
+        "✅ On-Time Performance",
+        "🧭 Recommendation"
+    ],
+    "Insight": [
+        f"{best_route} ({best_load:.0f}% load)",
+        f"{worst_trip} — {worst_delay:.1f} min delay",
+        f"{risk_label} ({delay_risk:.0f}%)",
+        f"{avg_passengers} per bus",
+        f"{avg_delay:.1f} min",
+        f"{on_time:.0f}%",
+        recommendation
+    ]
+}
+
+insight_df = pd.DataFrame(insights_data)
+
+# Display table
+st.dataframe(
+    insight_df,
+    use_container_width=True,
+    height=270
+)
+st.markdown('</div>', unsafe_allow_html=True)
+
+
