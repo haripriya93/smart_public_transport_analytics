@@ -356,9 +356,10 @@ st.markdown('</div>', unsafe_allow_html=True)
 st.markdown(
     """
     <div class="footer">
-      📊 Smart Public Transport Analytics • Built by Kira Konjeti • Python · Streamlit · PostgreSQL · Plotly · Folium · ML
+      📊 Smart Public Transport Analytics • Built by Hari priya  • Python · Streamlit · PostgreSQL · Plotly · Folium · ML
     </div>
     """, unsafe_allow_html=True
 )
+
 
 
