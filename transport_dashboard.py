@@ -52,15 +52,14 @@ st.markdown(
     """
     <div class="block" style="display:flex; justify-content:space-between; align-items:center;">
       <div>
-        <div style="font-size:26px; font-weight:800;">🚍 Smart Public Transport Analytics — v2.0</div>
+        <div style="font-size:26px; font-weight:800;">🚍 Smart Public Transport Analytics </div>
         <div style="color:#9aa4b2; margin-top:4px;">Real-time Monitoring • Route Risk • Heatmap • Predictive Insights</div>
       </div>
       <div style="text-align:right;">
-        <div style="font-size:12px; color:#9aa4b2;">Built by <strong>Kira Konjeti</strong></div>
-        <div style="font-size:12px; color:#9aa4b2;">Updated: {date}</div>
+
       </div>
     </div>
-    """.format(date=datetime.now().strftime("%Y-%m-%d")), unsafe_allow_html=True
+    
 )
 
 # Auto-refresh to feel live (15s)
@@ -409,5 +408,6 @@ st.markdown(
     </div>
     """, unsafe_allow_html=True
 )
+
 
 
