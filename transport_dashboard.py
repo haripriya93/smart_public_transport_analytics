@@ -299,41 +299,6 @@ else:
 st.markdown('</div>', unsafe_allow_html=True)
 
 # -----------------------------
-# INSIGHTS (auto narrative)
-# -----------------------------
-st.markdown('<div class="block">', unsafe_allow_html=True)
-st.subheader("🧠 Quick Insights")
-
-# Best / worst from current data
-best_route = df_load.sort_values("load_factor_est", ascending=False).head(1)["route_name"].iloc[0] if not df_load.empty else "N/A"
-worst_trip_row = df_delay.sort_values("avg_delay_min", ascending=False).head(1)
-worst_trip = worst_trip_row["trip_id"].iloc[0] if len(worst_trip_row) else "N/A"
-worst_delay = float(worst_trip_row["avg_delay_min"].iloc[0]) if len(worst_trip_row) else 0.0
-
-recommendation = "Add an extra bus on busiest routes during peak hours" if avg_load_pct > 80 else "Current capacity is adequate; monitor peak slots"
-risk_label = "Low" if delay_risk < 40 else ("Moderate" if delay_risk < 70 else "High")
-
-insight_md = f"""
-- 🏆 **Best Performing Route (by demand)**: **{best_route}**
-- ⚠️ **Most Delayed Trip**: **{worst_trip}** ({worst_delay:.1f} min)
-- 🔮 **Delay Risk (AI)**: **{risk_label} — {delay_risk:.0f}%**
-- 🧭 **Recommendation**: {recommendation}
-"""
-st.markdown(insight_md)
-st.markdown('</div>', unsafe_allow_html=True)
-
-# -----------------------------
-# FOOTER
-# -----------------------------
-st.markdown(
-    """
-    <div class="footer">
-      📊 Smart Public Transport Analytics • Built by Kira Konjeti • Python · Streamlit · PostgreSQL · Plotly · Folium · ML
-    </div>
-    """, unsafe_allow_html=True
-)
-
-# -----------------------------
 # INSIGHTS (TABLE FORMAT)
 # -----------------------------
 st.markdown('<div class="block">', unsafe_allow_html=True)
@@ -384,5 +349,16 @@ st.dataframe(
     height=270
 )
 st.markdown('</div>', unsafe_allow_html=True)
+
+
+# FOOTER
+# -----------------------------
+st.markdown(
+    """
+    <div class="footer">
+      📊 Smart Public Transport Analytics • Built by Kira Konjeti • Python · Streamlit · PostgreSQL · Plotly · Folium · ML
+    </div>
+    """, unsafe_allow_html=True
+)
 
 
