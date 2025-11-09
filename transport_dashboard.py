@@ -56,7 +56,7 @@ st.markdown(
         <div style="color:#9aa4b2; margin-top:4px;">Real-time Monitoring • Route Risk • Heatmap • Predictive Insights</div>
       </div>
       <div style="text-align:right;">
-        <div style="font-size:12px; color:#9aa4b2;">Built by <strong>Kira Konjeti</strong></div>
+        <div style="font-size:12px; color:#9aa4b2;">Built by <strong>Hari Priya </strong></div>
         <div style="font-size:12px; color:#9aa4b2;">Updated: {date}</div>
       </div>
     </div>
@@ -406,10 +406,11 @@ st.download_button(label="📥 Download Insights CSV", data=csv_bytes, file_name
 st.markdown(
     """
     <div class="footer">
-      📊 Smart Public Transport Analytics v2.0 • Built by Hari Priya Konjeti • Python · Streamlit · PostgreSQL · ML · Folium · Plotly
+       • Python · Streamlit · PostgreSQL · ML · Folium · Plotly
     </div>
     """, unsafe_allow_html=True
 )
+
 
 
 
