@@ -4,14 +4,14 @@
 # -----------------------------
 
 # -----------------------------------------------------------
-# 🚍 SMART PUBLIC TRANSPORT ANALYTICS — DARK MODE (NO SIDEBAR)
+# 🚍 SMART PUBLIC TRANSPORT ANALYTICS 
 # Works in LIVE DB mode (local PostgreSQL) and DEMO mode (cloud)
 # -----------------------------------------------------------
 
 # transport_dashboard_v2.py
-# Smart Public Transport Analytics Dashboard v2.0 (Dark Mode, Full-Width)
+# Smart Public Transport Analytics Dashboard 
 # Works in LIVE DB mode (local PostgreSQL) and DEMO mode (cloud auto fallback)
-# Built by: Kira Konjeti
+
 
 import streamlit as st
 import pandas as pd
@@ -74,7 +74,7 @@ def get_connection():
         conn = psycopg2.connect(
             dbname="transport",
             user="postgres",
-            password="postgres",  # change if needed locally
+            password="123456789",  # change if needed locally
             host="localhost",
             port="5432",
             connect_timeout=3
@@ -409,3 +409,4 @@ st.markdown(
     </div>
     """, unsafe_allow_html=True
 )
+
